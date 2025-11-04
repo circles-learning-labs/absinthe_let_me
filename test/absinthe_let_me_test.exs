@@ -43,9 +43,22 @@ defmodule AbsintheLetMeTest do
 
   test "normal user can get secret field on even numbered IDs" do
     result = run_query(@post_query, %{role: :user}, %{"id" => 2})
-    IO.inspect result
 
-#    assert result.data == %{"post" => %{"content" => "Post content", "id" => 1, "secret" => "Top secret"}},
-#    result.errors
+    assert result.data == %{"post" => %{"content" => "Post content", "id" => 2, "secret" => "Top secret"}}
+  end
+
+  @post_create_mutation """
+  mutation postCreate($id: Int!, $content: String!, $secret: String!) {
+    postCreate(id: $id, content: $content, secret: $secret) {
+      id
+      content
+      secret
+    }
+  }
+  """
+  test "admin can create and retrieve record" do
+    variables = %{"id" => 1, "content" => "Content", "secret" => "Secret"}
+    result = run_query(@post_create_mutation, %{role: :admin}, variables)
+    assert result == %{data: variables}
   end
 end

@@ -7,7 +7,8 @@ defmodule AbsintheLetMe.Test.Policy do
     end
 
     action :view_secret do
-      allow([:admin, :id_is_even])
+      allow(:id_is_even)
+      allow(:admin)
     end
 
     action :create do

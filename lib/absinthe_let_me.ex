@@ -1,18 +1,9 @@
-defmodule AbsintheLetme do
+defmodule AbsintheLetMe do
   @moduledoc """
   Documentation for `AbsintheLetme`.
   """
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> AbsintheLetme.hello()
-      :world
-
-  """
-  def hello do
-    :world
+  def policy_object(resolution) do
+    get_in(resolution, [Access.key!(:acc), AbsintheLetMe.Middleware, :policy_object])
   end
 end

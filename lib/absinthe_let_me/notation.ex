@@ -22,7 +22,7 @@ defmodule AbsintheLetMe.Notation do
 
   defmacro policy_object(policy_object_fun) do
     quote do
-      meta(:policy_object, policy_object_fun)
+      middleware AbsintheLetMe.Middleware, {:policy_object_fun, unquote(policy_object_fun)}
     end
   end
 end

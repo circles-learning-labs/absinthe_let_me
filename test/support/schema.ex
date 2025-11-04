@@ -1,6 +1,6 @@
 defmodule AbsintheLetMe.Test.Schema do
   use Absinthe.Schema
-  use AbsintheLetMe.Notation, policy_module: AbsintheLetMe.Test.Policies
+  use AbsintheLetMe.Notation, policy_module: AbsintheLetMe.Test.Policy
 
   import_types(AbsintheLetMe.Test.Schema.PostTypes)
 
@@ -12,19 +12,21 @@ defmodule AbsintheLetMe.Test.Schema do
         post(id)
       end)
 
-      policy_object(fn _, %{id: id}, _ -> post(id) end)
+      policy_object(fn %{id: id}, _ -> __MODULE__.post(id) end) 
     end
   end
 
   mutation do
     field :post_create, :post do
+      arg(:id, non_null(:integer))
       arg(:content, non_null(:string))
+      arg(:secret, non_null(:string))
 
-      resolve(fn _, %{content: content}, _ ->
-        {:ok, %{id: 1, content: content, secret: "New post secret"}}
+      resolve(fn %{id: id, content: content, secret: secret}, _ ->
+        {:ok, %{id: id, content: content, secret: secret}}
       end)
 
-      #  policy(:post_create)
+      policy(:post_create)
     end
   end
 
