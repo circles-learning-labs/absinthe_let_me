@@ -1,4 +1,8 @@
 defmodule AbsintheLetMe.Test.Policy do
+  @moduledoc """
+  Test policy module
+  """
+
   use LetMe.Policy, check_module: __MODULE__
 
   object :post do
