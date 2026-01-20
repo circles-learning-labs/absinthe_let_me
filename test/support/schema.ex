@@ -1,4 +1,8 @@
 defmodule AbsintheLetMe.Test.Schema do
+  @moduledoc """
+  Test schema
+  """
+
   use Absinthe.Schema
   use AbsintheLetMe.Notation, policy_module: AbsintheLetMe.Test.Policy
 
@@ -12,7 +16,15 @@ defmodule AbsintheLetMe.Test.Schema do
         post(id)
       end)
 
-      policy_object(fn %{id: id}, _ -> __MODULE__.post(id) end) 
+      policy_object(fn %{value: value} -> {:ok, value} end)
+    end
+
+    field :post_default_object, :post do
+      arg(:id, non_null(:integer))
+
+      resolve(fn _, %{id: id}, _ ->
+        post(id)
+      end)
     end
   end
 
@@ -23,10 +35,12 @@ defmodule AbsintheLetMe.Test.Schema do
       arg(:secret, non_null(:string))
 
       resolve(fn %{id: id, content: content, secret: secret}, _ ->
+        send(self(), :post_created)
         {:ok, %{id: id, content: content, secret: secret}}
       end)
 
       policy(:post_create)
+      policy_object(fn %{value: value} -> {:ok, value} end)
     end
   end
 

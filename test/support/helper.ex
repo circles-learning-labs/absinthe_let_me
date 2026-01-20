@@ -1,4 +1,8 @@
 defmodule AbsintheLetMe.Test.Helper do
+  @moduledoc """
+  Helper functions for tests
+  """
+
   def run_query(query, context, variables \\ %{}) do
     Absinthe.run!(
       query,

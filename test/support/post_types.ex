@@ -1,4 +1,8 @@
 defmodule AbsintheLetMe.Test.Schema.PostTypes do
+  @moduledoc """
+  Types for testing
+  """
+
   use Absinthe.Schema.Notation
   use AbsintheLetMe.Notation, policy_module: AbsintheLetMe.Test.Policy
 
