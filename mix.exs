@@ -28,7 +28,7 @@ defmodule AbsintheLetMe.MixProject do
   defp deps do
     [
       {:absinthe, "~> 1.7"},
-      {:let_me, "~> 1.2"},
+      {:let_me, "~> 2.0"},
       {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
     ]
